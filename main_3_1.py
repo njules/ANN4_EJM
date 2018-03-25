@@ -14,8 +14,10 @@ def readData(file_name):
 
 train_input = readData('bindigit_trn')
 train_target = readData('targetdigit_trn')
+test_input = readData('bindigit_tst')
+test_target = readData('targetdigit_tst')
 
 plt.imsave('test.png', train_input[0].reshape(28,28), cmap=cm.gray)
 
-rbm = BernoulliRBM(n_components=50, learning_rate=.01, batch_size=100, n_iter=20)
-rbm.fit(train_input)
+rbm = BernoulliRBM(n_components=300, learning_rate=.2, batch_size=100, n_iter=20)
+rbm.fit(train_input, y=test_input)
