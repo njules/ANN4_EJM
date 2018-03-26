@@ -3,6 +3,7 @@ from sklearn.neural_network import BernoulliRBM
 import csv
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
+from pylab import *
 
 first_number_index = [11, 2, 8, 15, 6, 10, 0, 4, 31, 9]
 
@@ -19,7 +20,8 @@ train_target = readData('targetdigit_trn')
 test_input = readData('bindigit_tst')
 test_target = readData('targetdigit_tst')
 
-rbm = BernoulliRBM(n_components=150, learning_rate=.2, batch_size=100, n_iter=50)
+#create and train model
+rbm = BernoulliRBM(n_components=50, learning_rate=.2, batch_size=100, n_iter=20)
 rbm.fit(train_input, y=test_input)
 
 original = []
@@ -37,3 +39,6 @@ for i in range(np.shape(reconstructed_boolean)[0]):
 for idx in range(10):
     plt.imsave('images/rbm_org_'+str(idx)+'.png', original[idx].reshape(28, 28), cmap=cm.gray)
     plt.imsave('images/rbm_rec_'+str(idx)+'.png', reconstructed[idx].reshape(28, 28), cmap=cm.gray)
+
+for i in range(len(rbm.components_)):
+    plt.imsave('rbm_weight_images/50/w'+str(i)+'.png', rbm.components_[i].reshape(28, 28), cmap=cm.gray)
